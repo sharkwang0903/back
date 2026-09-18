@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="數之背包——挑選指定數量的商品，讓重量剛好裝滿背包。">
+    <meta name="theme-color" content="#253247">
+    <title>數之背包</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23253247'/%3E%3Cpath d='M10 12V9a6 6 0 0112 0v3' fill='none' stroke='%23f6c453' stroke-width='3'/%3E%3Crect x='6' y='11' width='20' height='17' rx='3' fill='%23d96c4f'/%3E%3Cpath d='M11 18h10M16 14v8' stroke='%23fff7e6' stroke-width='2'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="game-shell">
+        <section id="home-screen" class="screen home-screen" aria-labelledby="game-title">
+            <div class="home-visual" aria-hidden="true">
+                <img class="home-backpack" src="assets/ui/backpack-home.png" alt="" decoding="async">
+                <div class="home-copy">
+                    <p class="eyebrow">數學組合小遊戲</p>
+                    <h1 id="game-title">數之背包</h1>
+                    <p>挑選指定數量的商品，<br>讓重量剛好裝滿背包！</p>
+                </div>
+            </div>
+
+            <div class="difficulty-panel" aria-labelledby="difficulty-title">
+                <div class="section-heading">
+                    <span>01</span>
+                    <h2 id="difficulty-title">選擇難度</h2>
+                </div>
+                <div class="difficulty-list">
+                    <button class="difficulty-button easy" type="button" data-mode="easy">
+                        <span class="button-number">6</span>
+                        <span><strong>簡單</strong><small>6 件商品</small></span>
+                        <span class="button-arrow" aria-hidden="true">→</span>
+                    </button>
+                    <button class="difficulty-button medium" type="button" data-mode="medium">
+                        <span class="button-number">8</span>
+                        <span><strong>中等</strong><small>8 件商品</small></span>
+                        <span class="button-arrow" aria-hidden="true">→</span>
+                    </button>
+                    <button class="difficulty-button hard" type="button" data-mode="hard">
+                        <span class="button-number">10</span>
+                        <span><strong>困難</strong><small>10 件商品</small></span>
+                        <span class="button-arrow" aria-hidden="true">→</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="game-screen" class="screen game-screen" aria-labelledby="level-heading" hidden>
+            <header class="game-header">
+                <button id="home-button" class="icon-button" type="button" aria-label="返回首頁">⌂</button>
+                <div>
+                    <p id="mode-label" class="eyebrow"></p>
+                    <h1 id="level-heading">第 1 / 8 關</h1>
+                </div>
+                <span class="header-badge" aria-hidden="true">Σ</span>
+            </header>
+
+            <section class="mission-card" aria-labelledby="mission-title">
+                <p id="mission-title" class="card-kicker">本關目標</p>
+                <p id="mission-text" class="mission-text"></p>
+            </section>
+
+            <section class="status-grid" aria-label="目前選取狀態" aria-live="polite">
+                <div class="status-card">
+                    <span>已選</span>
+                    <strong id="selected-status">0 / 0</strong>
+                    <small>件商品</small>
+                </div>
+                <div id="weight-card" class="status-card">
+                    <span>目前重量</span>
+                    <strong id="weight-status">0 / 0</strong>
+                    <small id="weight-message">繼續挑選</small>
+                </div>
+            </section>
+
+            <section class="backpack-section" aria-labelledby="backpack-title">
+                <div class="section-heading compact">
+                    <span>02</span>
+                    <h2 id="backpack-title">你的背包</h2>
+                </div>
+                <div class="game-backpack">
+                    <img class="game-backpack-art" src="assets/ui/backpack-game.png" alt="" aria-hidden="true" decoding="async">
+                    <div id="backpack-slots" class="backpack-slots"></div>
+                </div>
+                <p id="selection-hint" class="selection-hint" aria-live="polite">點選商品放進背包</p>
+            </section>
+
+            <section class="products-section" aria-labelledby="products-title">
+                <div class="section-heading compact">
+                    <span>03</span>
+                    <h2 id="products-title">挑選商品</h2>
+                </div>
+                <div id="product-grid" class="product-grid"></div>
+            </section>
+
+            <nav class="level-nav" aria-label="關卡導覽">
+                <button id="previous-level" class="nav-button" type="button">← 上一關</button>
+                <button id="next-level" class="nav-button" type="button">下一關 →</button>
+            </nav>
+        </section>
+    </main>
+
+    <div id="result-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+        <div class="modal-backdrop"></div>
+        <div class="modal-card">
+            <div id="modal-mark" class="modal-mark" aria-hidden="true">✓</div>
+            <p id="modal-kicker" class="eyebrow">重量吻合</p>
+            <h2 id="modal-title"></h2>
+            <p id="modal-message"></p>
+            <div id="modal-actions" class="modal-actions"></div>
+        </div>
+    </div>
+
+    <script src="js/products.js"></script>
+    <script src="js/difficulty.js"></script>
+    <script src="js/generator.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
