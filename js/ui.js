@@ -88,16 +88,24 @@
         var slots = [];
         var index;
         var card;
+        var imageContent;
 
-        elements.backpackSlots.style.gridTemplateColumns = "repeat(" + Math.min(level.targetCount, 3) + ", minmax(0, 1fr))";
+        elements.backpackSlots.style.gridTemplateColumns = "repeat(" + level.targetCount + ", minmax(0, 1fr))";
+        elements.backpackSlots.dataset.count = level.cards.length;
 
         for (index = 0; index < level.targetCount; index += 1) {
             card = selectedCards[index];
             if (card) {
+                imageContent = card.image
+                    ? '<img src="' + card.image + '" alt="" aria-hidden="true">'
+                    : '<span class="slot-monogram" aria-hidden="true">' + getMonogram(card.name) + '</span>';
+
                 slots.push(
                     '<div class="backpack-slot is-filled">' +
-                        '<span><span class="slot-monogram">' + getMonogram(card.name) + '</span>' +
-                        '<span class="slot-name">' + card.name + '</span></span>' +
+                        '<span class="slot-product">' +
+                            '<span class="slot-product-image" aria-hidden="true">' + imageContent + '</span>' +
+                            '<span class="slot-name">' + card.name + '</span>' +
+                        '</span>' +
                     '</div>'
                 );
             } else {
@@ -120,21 +128,20 @@
 
         elements.productGrid.innerHTML = level.cards.map(function (card) {
             var isSelected = selectedIds.indexOf(card.id) !== -1;
-            var link = card.url
-                ? '<a class="product-link" href="' + card.url + '" target="_blank" rel="noopener noreferrer">了解商品 ↗</a>'
-                : "";
+            var imageContent = card.image
+                ? '<img src="' + card.image + '" alt="" aria-hidden="true">'
+                : '<span class="product-monogram" aria-hidden="true">' + getMonogram(card.name) + '</span>';
 
             return (
                 '<article class="product-card' + (isSelected ? ' is-selected' : '') + '">' +
                     (isSelected ? '<span class="selected-check" aria-hidden="true">✓</span>' : '') +
                     '<button class="product-select" type="button" data-product-id="' + card.id + '" aria-pressed="' + isSelected + '">' +
-                        '<span class="product-image-placeholder" aria-label="商品圖片預留位置 128 × 128">' +
-                            '<span class="product-monogram" aria-hidden="true">' + getMonogram(card.name) + '</span>' +
+                        '<span class="product-image-placeholder' + (card.image ? ' has-image' : '') + '" aria-hidden="true">' +
+                            imageContent +
                         '</span>' +
                         '<span class="product-name">' + card.name + '</span>' +
                         '<span class="product-weight">重量 ' + card.weight + '</span>' +
                     '</button>' +
-                    link +
                 '</article>'
             );
         }).join("");
