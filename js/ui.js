@@ -15,10 +15,8 @@
         elements.missionText = document.getElementById("mission-text");
         elements.selectedStatus = document.getElementById("selected-status");
         elements.weightStatus = document.getElementById("weight-status");
-        elements.weightMessage = document.getElementById("weight-message");
         elements.weightCard = document.getElementById("weight-card");
         elements.backpackSlots = document.getElementById("backpack-slots");
-        elements.selectionHint = document.getElementById("selection-hint");
         elements.productGrid = document.getElementById("product-grid");
         elements.previousLevel = document.getElementById("previous-level");
         elements.nextLevel = document.getElementById("next-level");
@@ -89,9 +87,12 @@
         var index;
         var card;
         var imageContent;
+        var columnCount = level.targetCount === 6 ? 3 : level.targetCount;
 
-        elements.backpackSlots.style.gridTemplateColumns = "repeat(" + level.targetCount + ", minmax(0, 1fr))";
+        elements.gameScreen.dataset.backpackSlots = level.targetCount;
+        elements.backpackSlots.style.gridTemplateColumns = "repeat(" + columnCount + ", minmax(0, 1fr))";
         elements.backpackSlots.dataset.count = level.cards.length;
+        elements.backpackSlots.dataset.slots = level.targetCount;
 
         for (index = 0; index < level.targetCount; index += 1) {
             card = selectedCards[index];
@@ -160,16 +161,13 @@
 
         elements.modeLabel.textContent = viewModel.modeLabel + "模式";
         elements.levelHeading.textContent = "第 " + level.number + " / 8 關";
-        elements.missionText.textContent = "選 " + level.targetCount + " 件商品｜總重量 " + level.target;
+        elements.missionText.textContent = "選 " + level.targetCount + " 件｜重量 " + level.target;
         elements.selectedStatus.textContent = selectedCards.length + " / " + level.targetCount;
         elements.weightStatus.textContent = totalWeight + " / " + level.target + (isExact ? " ✓" : "");
-        elements.weightMessage.textContent = isOver ? "超重！" : (isExact ? "剛好裝滿" : "繼續挑選");
         elements.weightCard.classList.toggle("is-over", isOver);
         elements.weightCard.classList.toggle("is-exact", isExact);
         elements.previousLevel.disabled = viewModel.currentIndex === 0;
         elements.nextLevel.disabled = viewModel.currentIndex >= viewModel.unlockedIndex || viewModel.currentIndex === 7;
-        elements.selectionHint.textContent = viewModel.hint || "點選商品放進背包";
-
         renderBackpack(level, selectedCards);
         renderProducts(level, viewModel.selectedIds);
     }

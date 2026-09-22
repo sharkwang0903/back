@@ -312,12 +312,29 @@ a:focus-visible {
 
 .game-screen {
     display: grid;
-    grid-template-rows: 9% 8% 10% 30% 35% 8%;
+    grid-template-rows: 9% 9% 32% 42% 8%;
     overflow: hidden;
     background:
         linear-gradient(90deg, var(--paper-deep) 0 12px, transparent 12px) 0 94% / 36px 8px no-repeat,
         linear-gradient(90deg, var(--paper-deep) 0 18px, transparent 18px) 100% 42% / 46px 8px no-repeat,
         var(--paper);
+}
+
+.game-screen[data-backpack-slots="6"] {
+    grid-template-rows: 9% 9% 36% 38% 8%;
+}
+
+.game-screen[data-backpack-slots="2"] {
+    grid-template-rows: 9% 9% 27% 47% 8%;
+}
+
+.game-screen[data-backpack-slots="3"] {
+    grid-template-rows: 9% 9% 29% 45% 8%;
+}
+
+.game-screen[data-backpack-slots="4"],
+.game-screen[data-backpack-slots="5"] {
+    grid-template-rows: 9% 9% 30% 44% 8%;
 }
 
 .game-header {
@@ -387,21 +404,29 @@ a:focus-visible {
 }
 
 .mission-card {
-    display: flex;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: 6px;
     align-items: center;
     min-height: 0;
     margin: 4px 12px;
-    padding: 5px 10px;
+    padding: 4px 6px 4px 9px;
     background: var(--gold);
     border: 3px solid var(--line);
     box-shadow: 3px 3px 0 var(--ink);
 }
 
+.mission-goal {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+    min-width: 0;
+}
+
 .card-kicker {
     flex: 0 0 auto;
     margin: 0;
-    padding-right: 8px;
+    padding-right: 7px;
     border-right: 2px solid rgba(37, 50, 71, .35);
     font-size: clamp(.64rem, 1.7vh, .75rem);
     font-weight: 900;
@@ -411,7 +436,7 @@ a:focus-visible {
 .mission-text {
     margin: 0;
     overflow: hidden;
-    font-size: clamp(.84rem, 2.15vh, 1rem);
+    font-size: clamp(.76rem, 1.95vh, .92rem);
     font-weight: 900;
     line-height: 1.25;
     text-overflow: ellipsis;
@@ -420,61 +445,56 @@ a:focus-visible {
 
 .status-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 7px;
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+    gap: 0;
+    height: 100%;
     min-height: 0;
-    margin: 2px 12px 5px;
+    margin: 0;
 }
 
 .status-card {
     display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: 1fr 1fr;
-    column-gap: 7px;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
     align-items: center;
     min-width: 0;
-    padding: 4px 8px;
-    background: var(--paper);
-    border: 2px solid var(--line);
-    box-shadow: var(--shadow-small);
+    padding: 0 4px;
+    background: transparent;
+    border: 0;
+    border-left: 2px solid rgba(37, 50, 71, .35);
+    box-shadow: none;
+    text-align: center;
 }
 
 .status-card span,
-.status-card small,
 .status-card strong {
     display: block;
 }
 
 .status-card span {
-    grid-row: 1 / 3;
-    color: var(--ink-soft);
-    font-size: clamp(.68rem, 1.8vh, .78rem);
-    font-weight: 700;
+    grid-row: auto;
+    color: var(--ink);
+    font-size: clamp(.56rem, 1.4vh, .66rem);
+    font-weight: 900;
+    line-height: 1;
 }
 
 .status-card strong {
-    align-self: end;
+    align-self: center;
     margin: 0;
-    font-size: clamp(.92rem, 2.5vh, 1.15rem);
-    line-height: 1.05;
-}
-
-.status-card small {
-    align-self: start;
-    min-height: 0;
-    color: var(--ink-soft);
-    font-size: clamp(.62rem, 1.55vh, .72rem);
-    font-weight: 700;
+    overflow: hidden;
+    font-size: clamp(.76rem, 2vh, .94rem);
+    line-height: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .status-card.is-exact {
     color: var(--success);
-    border-color: var(--success);
 }
 
 .status-card.is-over {
     color: var(--danger);
-    border-color: var(--danger);
 }
 
 .backpack-section,
@@ -502,7 +522,7 @@ a:focus-visible {
 
 .backpack-section {
     display: grid;
-    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-rows: auto minmax(0, 1fr);
     padding-top: 2px;
     padding-bottom: 3px;
 }
@@ -581,10 +601,11 @@ a:focus-visible {
 
 .slot-product-image {
     display: grid;
-    width: min(100%, var(--product-image-size));
-    height: auto;
+    width: auto;
+    height: 100%;
     min-height: 0;
-    max-height: 100%;
+    max-width: min(100%, var(--product-image-size));
+    max-height: var(--product-image-size);
     aspect-ratio: 1;
     margin: 0 auto 2px;
     overflow: hidden;
@@ -625,15 +646,6 @@ a:focus-visible {
     color: var(--ink-soft);
     font-size: clamp(1rem, 3vh, 1.4rem);
     opacity: .55;
-}
-
-.selection-hint {
-    min-height: 1.2em;
-    margin: 2px 0 0;
-    color: var(--ink-soft);
-    text-align: center;
-    font-size: clamp(.64rem, 1.55vh, .75rem);
-    font-weight: 700;
 }
 
 .product-grid {
@@ -691,9 +703,10 @@ a:focus-visible {
 .product-image-placeholder {
     position: relative;
     display: grid;
-    width: min(100%, var(--product-image-size));
+    width: auto;
     height: 100%;
     min-height: 0;
+    max-width: min(100%, var(--product-image-size));
     max-height: var(--product-image-size);
     aspect-ratio: 1;
     margin: 0 auto 2px;
@@ -732,19 +745,36 @@ a:focus-visible {
     image-rendering: pixelated;
 }
 
-.product-grid[data-count="6"],
-.backpack-slots[data-count="6"] {
-    --product-image-size: clamp(58px, 10vh, 82px);
+.product-grid[data-count="6"] {
+    --product-image-size: clamp(88px, 17vh, 130px);
 }
 
-.product-grid[data-count="8"],
-.backpack-slots[data-count="8"] {
-    --product-image-size: clamp(50px, 9vh, 72px);
+.product-grid[data-count="8"] {
+    --product-image-size: clamp(74px, 15vh, 116px);
 }
 
-.product-grid[data-count="10"],
-.backpack-slots[data-count="10"] {
-    --product-image-size: clamp(42px, 8vh, 60px);
+.product-grid[data-count="10"] {
+    --product-image-size: clamp(54px, 11vh, 84px);
+}
+
+.backpack-slots[data-slots="2"] {
+    --product-image-size: clamp(104px, 18vh, 138px);
+}
+
+.backpack-slots[data-slots="3"] {
+    --product-image-size: clamp(88px, 16vh, 120px);
+}
+
+.backpack-slots[data-slots="4"] {
+    --product-image-size: clamp(72px, 13vh, 100px);
+}
+
+.backpack-slots[data-slots="5"] {
+    --product-image-size: clamp(60px, 11vh, 86px);
+}
+
+.backpack-slots[data-slots="6"] {
+    --product-image-size: clamp(54px, 11vh, 84px);
 }
 
 .product-monogram {
@@ -941,6 +971,18 @@ a:focus-visible {
 
     .product-card:not(.is-selected):hover {
         transform: translateY(-2px);
+    }
+}
+
+@media (max-width: 430px) {
+    .game-screen[data-backpack-slots="2"] {
+        grid-template-rows: 9% 9% 31% 43% 8%;
+    }
+
+    .game-screen[data-backpack-slots="3"],
+    .game-screen[data-backpack-slots="4"],
+    .game-screen[data-backpack-slots="5"] {
+        grid-template-rows: 9% 9% 32% 42% 8%;
     }
 }
 

@@ -22,6 +22,6 @@
         { id: "IMM+2", name: "IMM+2 咖啡", image: "assets/products/imm+2.png", url: "https://www.012s.com.tw/products/imm2-30%E5%8C%85100%E5%8C%85%E5%92%96%E5%95%A11121-22%E6%B0%B4%E6%AF%8D%E6%97%A5%E7%89%B9%E6%83%A0%E9%99%90%E5%AE%9A"},
         { id: "SWW+2", name: "SWW+2 咖啡", image: "assets/products/sww+2.png", url: "https://www.012s.com.tw/products/sww2-30%E5%8C%85100%E5%8C%85%E5%92%96%E5%95%A11121-22%E6%B0%B4%E6%AF%8D%E6%97%A5%E7%89%B9%E6%83%A0%E9%99%90%E5%AE%9A-1"},
         { id: "jellyfish-silver-pendant", name: "水母銀飾", image: "assets/products/jellyfish-silver-pendant.png", url: "https://www.012s.com.tw/products/%E7%B4%80%E5%BF%B5%E5%93%81995%E9%8A%80%E9%A3%BE-%E7%AC%AC13%E7%94%9F%E8%82%96"},
-        { id: "BF01+1", name: "BF01+1早餐包", image: "assets/products/bf01+1.png", url:"https://www.012s.com.tw/products/bf01"},
+        { id: "BF01+1", name: "早餐包", image: "assets/products/bf01+1.png", url:"https://www.012s.com.tw/products/bf01"},
     ];
 }());
