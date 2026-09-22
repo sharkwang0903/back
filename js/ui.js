@@ -82,6 +82,14 @@
         return name.replace("商品 ", "") || "物";
     }
 
+    function escapeAttribute(value) {
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/"/g, "&quot;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+    }
+
     function renderBackpack(level, selectedCards) {
         var slots = [];
         var index;
@@ -132,6 +140,10 @@
             var imageContent = card.image
                 ? '<img src="' + card.image + '" alt="" aria-hidden="true">'
                 : '<span class="product-monogram" aria-hidden="true">' + getMonogram(card.name) + '</span>';
+            var productUrl = typeof card.url === "string" ? card.url.trim() : "";
+            var productLink = productUrl
+                ? '<a class="product-link" href="' + escapeAttribute(productUrl) + '" target="_blank" rel="noopener noreferrer" aria-label="了解商品：' + escapeAttribute(card.name) + '">了解商品</a>'
+                : "";
 
             return (
                 '<article class="product-card' + (isSelected ? ' is-selected' : '') + '">' +
@@ -143,6 +155,7 @@
                         '<span class="product-name">' + card.name + '</span>' +
                         '<span class="product-weight">重量 ' + card.weight + '</span>' +
                     '</button>' +
+                    productLink +
                 '</article>'
             );
         }).join("");

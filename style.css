@@ -830,7 +830,7 @@ a:focus-visible {
     position: absolute;
     z-index: 2;
     top: -5px;
-    right: -4px;
+    left: -4px;
     display: grid;
     width: clamp(18px, 3.4vh, 24px);
     height: clamp(18px, 3.4vh, 24px);
@@ -844,17 +844,35 @@ a:focus-visible {
 
 .product-link {
     position: absolute;
-    right: 2px;
-    bottom: 2px;
-    left: 2px;
-    display: block;
-    padding: 2px;
+    z-index: 3;
+    top: 3px;
+    right: 3px;
+    display: inline-flex;
+    min-height: 23px;
+    padding: 3px 5px;
+    align-items: center;
+    justify-content: center;
     color: var(--ink);
+    background: var(--gold);
     text-align: center;
     text-decoration: none;
     border: 2px solid var(--line);
-    font-size: .6rem;
-    font-weight: 800;
+    box-shadow: 1px 1px 0 var(--line);
+    font-size: clamp(.54rem, 1.25vh, .63rem);
+    font-weight: 900;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.product-link:active {
+    transform: translate(1px, 1px);
+    box-shadow: none;
+}
+
+.product-grid[data-count="10"] .product-link {
+    min-height: 21px;
+    padding: 2px 3px;
+    font-size: clamp(.5rem, 1.1vh, .56rem);
 }
 
 .level-nav {
@@ -971,6 +989,11 @@ a:focus-visible {
 
     .product-card:not(.is-selected):hover {
         transform: translateY(-2px);
+    }
+
+    .product-link:hover {
+        color: #fff;
+        background: var(--accent-dark);
     }
 }
 
